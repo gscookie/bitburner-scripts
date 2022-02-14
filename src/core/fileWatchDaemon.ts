@@ -11,10 +11,13 @@ export async function main(ns: NS): Promise<void> {
 
     while (true) {
         const files = ns.ls('home', '.js')
+        const gitFiles: string[] = []
 
         for (const file of files) {
             const contents = ns.read(file)
             const hash = getHash(contents)
+            const isGitControlled = contents.includes('//# sourceMappingURL')
+            if(isGitControlled) gitFiles.push(file)
 
             if (hash != hashes[file]) {
                 ns.tprintf(`INFO: Detected change in ${file}`)
@@ -36,6 +39,9 @@ export async function main(ns: NS): Promise<void> {
                 hashes[file] = hash
             }
         }
+
+        const nonGitFiles = files.filter(fn => !gitFiles.includes(fn))
+        ns.print(`${nonGitFiles.length > 0 ? 'WARN' : 'INFO'} Found ${nonGitFiles.length} file(s) not in git. [${nonGitFiles}]`)
 
         await ns.sleep(1000)
     }

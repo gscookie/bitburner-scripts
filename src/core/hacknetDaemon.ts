@@ -22,7 +22,7 @@ class NodeStatsEx {
         this.minLevelUpgradeCost = this.ns.hacknet.getLevelUpgradeCost(idx, 1)
         this.upgradeRamCost = this.ns.hacknet.getRamUpgradeCost(idx, 1)
         this.upgradeCoreCost = this.ns.hacknet.getCoreUpgradeCost(idx, 1)
-        
+
         this.minUpgradeCost = this.upgradeLevelCost
         if (this.upgradeCoreCost < this.minLevelUpgradeCost) {
             this.minUpgradeCost = this.upgradeCoreCost
@@ -65,7 +65,7 @@ class HackNetDao {
     }
 
     getCheapestUpgrade() {
-        return this.nodeStats.map((e: any, i) => [i, e.minUpgradeCost]).sort((a, b) => a[1] - b[1])[0]
+        return this.nodeStats.map((e, i) => [i, e.minUpgradeCost]).sort((a, b) => a[1] - b[1])[0]
     }
 
     cheapestUpgradeCost() {
@@ -107,7 +107,7 @@ function optimize(hn: HackNetDao) {
     ns.print(`\n>> OPTIMIZE <<\n>> ${(new Date()).toLocaleDateString()} <<\n>> ${(new Date()).toLocaleTimeString()} <<`)
 
     ns.print(`   Current Money: ${format_money(hn.currentMoney)}`)
-    ns.print(`Levels: ${hn.nodeStats.map((e: any) => e.level).sort(sort_asc)}`)
+    ns.print(`Levels: ${hn.nodeStats.map(e => e.level).sort(sort_asc)}`)
 
     let success = true
     ns.print(`   MAX_NODE_COST: ${format_money(hn.currentMoney * MAX_NODE_COST)}`)
@@ -129,7 +129,7 @@ function optimize(hn: HackNetDao) {
         ns.print(`NEW_UPGRADE_COST: ${format_money(hn.cheapestUpgradeCost())}`)
     }
     ns.print(`   Current Money: ${format_money(hn.currentMoney)}`)
-    ns.print(`Levels: ${hn.nodeStats.map((e: any) => e.level).sort(sort_asc)}`)
+    ns.print(`Levels: ${hn.nodeStats.map(e => e.level).sort(sort_asc)}`)
 
 }
 

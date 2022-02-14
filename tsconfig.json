@@ -5,6 +5,7 @@
     "src/**/*",
   ],
   "compilerOptions": {
+    "allowJs": true,
     "module": "esnext",
     "target": "esnext",
     "moduleResolution": "node",
