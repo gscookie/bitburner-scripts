@@ -26,7 +26,7 @@ export async function main(ns: NS): Promise<void> {
                 ns.killall(target)
             }
             for (const hackTarget of hackTargets) {
-                ns.exec(SCRIPT, target, threads, hackTarget)
+                ns.exec(SCRIPT, target, threads, hackTarget, threads)
                 ns.tprint(`Running ${SCRIPT} against ${hackTarget} on ${target} with ${threads} thread(s).`)
             }
         } else {

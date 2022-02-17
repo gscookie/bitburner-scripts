@@ -24,7 +24,7 @@ export async function main(ns: NS): Promise<void> {
     const threads = typeof ns.args[1] === 'number' ? ns.args[1] as number : 1
     const moneyThresh = ns.getServerMaxMoney(target)
     const minDifficulty = ns.getServerMinSecurityLevel(target)
-    const securityThresh = minDifficulty + (0.05*threads)
+    const securityThresh = Math.min(100,minDifficulty + (0.05*threads))
     const initTime = Date.now()
     let lastCycleIncome = 0
     let lastCycleTime = 1
@@ -41,7 +41,7 @@ export async function main(ns: NS): Promise<void> {
         `[h:g:w.stats: Hacks(successful):Grows:Weakens - ${hackCount}(${hackSuccessCount}):${growCount}:${weakenCount} ]`
     ].join(" ")
     while(true) {
-        if (ns.getServerSecurityLevel(target) > securityThresh) {
+        if (ns.getServerSecurityLevel(target) >= securityThresh) {
             weakenCount++
             LOGGER.info(`Running weaken on ${target}. ${stats()}`)
             await ns.weaken(target);

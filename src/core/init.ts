@@ -18,6 +18,8 @@ export async function main(ns : NS) : Promise<void> {
     
     // ns.run('/core/schedulerService.js')
     
+    // Just chill for a minute or so
+    await ns.sleep(60*1000)
 
     const allServers = await findAllServers(ns)
 
